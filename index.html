@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>CSS 3D Book Animation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <audio id="background-music" autoplay loop>
+      <source src="audio/song.mp3" type="audio/mp3">
+      Your browser does not support the audio element.
+    </audio>
+
+    <div id="lottie-background"></div>
+      <div class="card" onclick="toggleBook()">
+        <div class="cover">
+          <img src="images/cover1.jpg" alt="">
+          <img src="images/jimpam2.jpeg" alt="">
+          <button class="music-button" onclick="toggleMusic()">🎵</button>
+        </div>
+        <div id="content" class="content">
+          <h2>
+            Athira,
+          </h2>
+          <p>
+            ""Valentine’s Day has come and gone so many times, and maybe no one has ever given you a flower before. But today, I want to change that—because someone as kind, as warm, and as special as you deserves every little joy in this world."" <br> <br>
+
+            "There’s something about you—this rare, effortless way you make people feel at home when they talk to you. With you, there’s no fear of judgment—just comfort, just ease." <br> <br>
+            
+            "Even though you're far away, you’re still the closest person to my heart. And if I had to name my favorite person right now... well, you already know the answer.""
+          </p>
+          <button class="flower-button" onclick="showFlower()">Click here</button>
+        </div>
+        <div class="flower-container" id="flower-container">
+          <img src="images/zenitsu.png" alt="Flower" class="flower-image">
+          <p class="valentine-text">Happy Valentine's Day Athira Nair !</p>
+        </div>
+      </div>
+
+    <script>
+      let isFlowerDisplay = false;
+      window.onload = function () {
+        var music = document.getElementById("background-music");
+        music.play().catch(error => console.log("Autoplay blocked:", error));
+      }
+        var animation = lottie.loadAnimation({
+          container: document.getElementById('lottie-background'),
+          renderer: 'svg',
+          loop: true,
+          autoplay: true,
+          path: 'images/animation3.json'
+        });
+
+        var musicanimation = lottie.loadAnimation({
+          container: document.getElementById('music-lottie'),
+          renderer: 'svg',
+          loop: true,
+          autoplay: true,
+          path: 'images/music.json'
+        });
+
+      function showFlower() {
+        isFlowerDisplay = true;
+        event.stopPropagation();
+        const content = document.getElementById("content");
+        const flowerContainer = document.getElementById("flower-container");
+        const button = document.querySelector(".flower-button");
+        
+        content.style.display = "none";
+        button.style.display = "none";
+        flowerContainer.style.display = "block";
+        
+        setTimeout(() => { 
+          flowerContainer.style.opacity = "1"; 
+        }, 50);
+        
+        setTimeout(() => {
+          flowerContainer.style.opacity = "0";
+          setTimeout(() => {
+            flowerContainer.style.display = "none";
+            content.style.display = "block";
+            button.style.display = "block";
+            isFlowerDisplay = false;
+          }, 1000);
+        }, 5000);
+      }
+
+      function toggleMusic() {
+        event.stopPropagation()
+        var music = document.getElementById("background-music");
+        var button = document.querySelector(".music-button");
+
+        if (music.paused) {
+          music.play();
+        } else {
+          music.pause();
+        }
+      }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      var music = document.getElementById("background-music");
+
+      // Play music when the user interacts with the page (click or tap)
+      function enableAudio() {
+        music.play().catch(error => console.log("Autoplay blocked:", error));
+        document.removeEventListener("click", enableAudio);
+      }
+
+    document.addEventListener("click", enableAudio);
+});
+
+      function toggleBook() {
+        if (isFlowerDisplay) return;
+        var book = document.querySelector(".card");
+        book.classList.toggle("open");
+      }
+
+    document.querySelector(".flower-button").addEventListener("click", showFlower);    
+  </script>
+
+  </body>
+</html>
